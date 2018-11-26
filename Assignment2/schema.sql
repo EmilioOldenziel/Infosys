@@ -1,8 +1,8 @@
-DROP TABLE customer; 
+/*DROP TABLE customer; 
 DROP TABLE artist; 
 DROP TABLE purchase;
-
-CREATE TABLE customer (
+*/
+CREATE TABLE customer2 (
 	cust_no int,
 	cust_name varchar(50),
 	cust_addr varchar(200),
@@ -10,7 +10,7 @@ CREATE TABLE customer (
 	CONSTRAINT customers_pk PRIMARY KEY (cust_no)
  );
 
-CREATE TABLE artist (
+/*CREATE TABLE artist (
 	art_id int,
 	art_name varchar(50),
 	art_code varchar(200),
@@ -25,17 +25,23 @@ CREATE TABLE purchase (
 	price int,
 	CONSTRAINT purchases_pk PRIMARY KEY (cust_no, art_id)
  );
+*/
 
-CREATE TRIGGER names_to_uppercase
-	BEFORE INSERT OR UPDATE ON customer
-	FOR EACH ROW
-	BEGIN
-  		:NEW.cust_name := UPPER(:NEW.cust_name);
-  	END;
+/*CREATE OR REPLACE FUNCTION customer_to_uppercase() RETURNS TRIGGER AS $$
+    BEGIN
+        UPDATE customer SET cust_name = UPPER(cust_name);
+	    RETURN NEW;
+    END;
+$$ LANGUAGE plpgsql;
 
-/*CREATE OR REPLACE TRIGGER names_to_uppercase
-  	BEFORE INSERT OR UPDATE ON artist
-  	FOR EACH ROW
-  	BEGIN
-  		:NEW.art_name := UPPER(:NEW.art_name);
-  	END;*/
+*/
+
+
+create function cust2upper() returns trigger as $$
+begin
+    new.cust_name := old.cust_name;
+    return new;
+end
+$$ language plpgsql;
+
+create trigger mytrigger before insert on customer2 for each row execute procedure cust2upper();
