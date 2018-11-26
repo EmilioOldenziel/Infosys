@@ -46,7 +46,7 @@ END;
 $BODY$
 language plpgsql;
 
-
+/* function that raises an error when price is not positive */
 CREATE OR REPLACE FUNCTION price_pos() 
 RETURNS TRIGGER AS 
 $BODY$
