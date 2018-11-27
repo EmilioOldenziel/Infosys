@@ -8,6 +8,14 @@ CREATE TABLE customer (
 	CONSTRAINT customers_pk PRIMARY KEY (cust_no)
  );
 
+CREATE TABLE purchase (
+	cust_no int,
+	art_code varchar(200), 
+	pur_date DATE,
+	price int,
+	CONSTRAINT purchases_pk PRIMARY KEY (cust_no, art_code, pur_date)
+ );
+
 CREATE TABLE artist (
 	artist_id int,
 	artist_name varchar(50),
@@ -17,17 +25,10 @@ CREATE TABLE artist (
 CREATE TABLE article (
 	art_code varchar(200),
 	art_title varchar(200),
-	CONSTRAINT article_pk PRIMARY KEY (art_code)
+	artist_id int, 
+	CONSTRAINT article_pk PRIMARY KEY (art_code),
+	FOREIGN KEY (artist_id) REFERENCES artist(artist_id)
 );
-
-CREATE TABLE purchase (
-	cust_no int,
-	artist_id int,
-	art_code varchar(200), 
-	pur_date DATE,
-	price int,
-	CONSTRAINT purchases_pk PRIMARY KEY (cust_no, artist_id, art_code, pur_date)
- );
 
 /* function that changes a name of customer to its uppercase */
 CREATE OR REPLACE FUNCTION cust_uppercase()
