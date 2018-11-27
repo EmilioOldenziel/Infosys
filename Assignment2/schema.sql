@@ -25,7 +25,7 @@ CREATE TABLE art (
 	art_code varchar(200),
 	art_title varchar(200),
 	artist_id int, 
-	CONSTRAINT art PRIMARY KEY (art_code),
+	CONSTRAINT art_pk PRIMARY KEY (art_code),
 	FOREIGN KEY (artist_id) REFERENCES artist(artist_id)
 );
 
