@@ -1,4 +1,4 @@
-/* create tables customer, artist and purchase */
+/* create tables customer, artist, article and purchase */
 
 CREATE TABLE customer (
 	cust_no int,
@@ -9,19 +9,24 @@ CREATE TABLE customer (
  );
 
 CREATE TABLE artist (
-	art_id int,
-	art_name varchar(50),
+	artist_id int,
+	artist_name varchar(50),
+	CONSTRAINT artist_pk PRIMARY KEY (artist_id)
+ );
+
+CREATE TABLE article (
 	art_code varchar(200),
 	art_title varchar(200),
-	CONSTRAINT artist_pk PRIMARY KEY (art_id)
- );
+	CONSTRAINT article_pk PRIMARY KEY (art_code)
+);
 
 CREATE TABLE purchase (
 	cust_no int,
-	art_id int,
+	artist_id int,
+	art_code varchar(200), 
 	pur_date DATE,
 	price int,
-	CONSTRAINT purchases_pk PRIMARY KEY (cust_no, art_id)
+	CONSTRAINT purchases_pk PRIMARY KEY (cust_no, artist_id, art_code, pur_date)
  );
 
 /* function that changes a name of customer to its uppercase */
@@ -40,7 +45,7 @@ CREATE OR REPLACE FUNCTION art_uppercase()
 RETURNS TRIGGER AS 
 $BODY$
 BEGIN
-	UPDATE artist SET art_name = UPPER(art_name);
+	UPDATE artist SET artist_name = UPPER(artist_name);
 	RETURN NEW;
 END;
 $BODY$
