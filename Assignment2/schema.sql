@@ -1,5 +1,4 @@
-/* create tables customer, artist, article and purchase */
-
+/* create tables customer, artist, art and purchase */
 CREATE TABLE customer (
 	cust_no int,
 	cust_name varchar(50),
@@ -22,11 +21,11 @@ CREATE TABLE artist (
 	CONSTRAINT artist_pk PRIMARY KEY (artist_id)
  );
 
-CREATE TABLE article (
+CREATE TABLE art (
 	art_code varchar(200),
 	art_title varchar(200),
 	artist_id int, 
-	CONSTRAINT article_pk PRIMARY KEY (art_code),
+	CONSTRAINT art PRIMARY KEY (art_code),
 	FOREIGN KEY (artist_id) REFERENCES artist(artist_id)
 );
 
