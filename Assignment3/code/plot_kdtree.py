@@ -81,13 +81,12 @@ if __name__ == '__main__':
 		for element in dtb.keys():
 			dtb.update_field(element,'quad',quadtree.depth)
 		
-		for quad_lvl, bb_list in sorted(quadtree.quads.items(), key=lambda x: x[0], reverse=True): 
+		for quad_lvl, bb_list in sorted(quadtree.quads.items(), key=lambda x: x[0], reverse=True):
 			for bb in bb_list: 
 				center = bb.centroid()
 				closest_indices = tree.closest(center)
-				list_closest = dtb.query(closest_indices)
-				shr_dist = np.inf
-				closest_idx = np.argmin([((center[0] - element[0])**2 + np.abs(center[1] - element[1])**2) for element in list_closest])
+				closest_list = dtb.query(closest_indices)
+				closest_idx = np.argmin([((center[0] - element[1])**2 + (center[1] - element[2])**2) for element in closest_list])
 
 				dtb.update_field(closest_indices[closest_idx], 'quad', quad_lvl)
 
